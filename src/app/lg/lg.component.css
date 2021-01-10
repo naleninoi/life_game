@@ -1,0 +1,7 @@
+table.gameboard {
+  text-align: center;
+  border: 1px solid;
+  border-collapse: collapse;
+  padding: 1px;
+  empty-cells: show;
+}
