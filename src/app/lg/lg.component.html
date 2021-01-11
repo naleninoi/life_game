@@ -1,8 +1,8 @@
 <div class="container">
   <h2>Life Game works!</h2>
   <table class="gmbrd">
-    <tr *ngFor = "let item of createBoard(tableRows)">
-      <td *ngFor = "let item of createBoard(tableCols)" (click)="changeStatus()" [ngClass]="status ? 'success': 'alive'">&nbsp;</td>
+    <tr *ngFor = "let row of cells; index as i">
+      <td *ngFor = "let cell of cells[i]" [ngClass]="cell ? 'success': 'alive'">&nbsp;</td>
     </tr>
   </table>
   <br>
