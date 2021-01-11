@@ -1,8 +1,21 @@
-<p>
-Life Game works!
-</p>
-<table class="gameboard">
-  <tr *ngFor = "let item of createBoard(5)">
-    <td *ngFor = "let item of createBoard(5)">o</td>
-  </tr>
-</table>
+<div class="container">
+  <h2>Life Game works!</h2>
+  <table class="gmbrd">
+    <tr *ngFor = "let item of createBoard(tableRows)">
+      <td *ngFor = "let item of createBoard(tableCols)" (click)="changeStatus()" [ngClass]="status ? 'success': 'alive'">&nbsp;</td>
+    </tr>
+  </table>
+  <br>
+  <div class="alert alert-warning">
+    <form (submit)="setRows(rows.value)">
+      <label for="rows">Количество строк в игровом поле</label><br>
+      <input type="number" id="table_rows" placeholder="Количество строк" #rows>
+      <button type="submit">Задать</button>
+    </form>
+    <form (submit)="setCols(cols.value)">
+      <label for="cols">Количество столбцов в игровом поле</label><br>
+      <input type="number" id="table_cols" placeholder="Количество столбцов" #cols>
+      <button type="submit">Задать</button>
+    </form>
+  </div>
+</div>

@@ -9,20 +9,35 @@ export class LgComponent implements OnInit {
 
   tableRows:number;
   tableCols:number;
+  status: boolean = true;
 
   constructor() { }
 
   ngOnInit(): void {
-    this.tableRows = 5;
-    this.tableCols = 5;
+    this.tableRows = 20;
+    this.tableCols = 20;
   }
 
-  createBoard(number) {
+  createBoard(n:number) {
     let items = [];
-    for (let i = 1; i <= number; i++) {
+    for (let i = 1; i <= n; i++) {
       items.push(i);
   }
   return items;
+  }
+
+  setRows(rows: any) {
+    this.tableRows = rows;
+    return false;
+  }
+
+  setCols(cols: any) {
+    this.tableCols = cols;
+    return false;
+  }
+
+  changeStatus() {
+    this.status = !this.status;
   }
 
 }
