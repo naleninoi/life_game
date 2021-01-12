@@ -15,10 +15,9 @@ export class LgComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    this.tableRows = 8;
-    this.tableCols = 8;
-    this.cells = this.createBoard(this.tableRows, this.tableCols)
-    this.rows = this.cells.length
+    this.tableRows = 12;
+    this.tableCols = 12;
+    this.cells = this.createBoard(this.tableRows, this.tableCols);
   }
 
   createBoard(rows:number, cols:number) {
@@ -34,13 +33,10 @@ export class LgComponent implements OnInit {
   return cells;
   }
 
-  setRows(rows: any) {
+  setBoard(rows: any, cols: any) {
     this.tableRows = rows;
-    return false;
-  }
-
-  setCols(cols: any) {
     this.tableCols = cols;
+    this.cells = this.createBoard(this.tableRows, this.tableCols);
     return false;
   }
 

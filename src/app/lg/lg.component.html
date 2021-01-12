@@ -7,15 +7,11 @@
   </table>
   <br>
   <div class="alert alert-warning">
-    <form (submit)="setRows(rows.value)">
-      <label for="rows">Количество строк в игровом поле</label><br>
-      <input type="number" id="table_rows" placeholder="Количество строк" #rows>
-      <button type="submit">Задать</button>
-    </form>
-    <form (submit)="setCols(cols.value)">
-      <label for="cols">Количество столбцов в игровом поле</label><br>
-      <input type="number" id="table_cols" placeholder="Количество столбцов" #cols>
-      <button type="submit">Задать</button>
+    <form (submit)="setBoard(rows.value, cols.value)">
+      <label>Задайте размер игрового поля</label><br>
+      <input type="number" id="table_rows" placeholder="10" value="{{tableRows}}" min=3 max=100 #rows> Строки (3-100)<br>
+      <input type="number" id="table_cols" placeholder="10" value="{{tableCols}}" min=3 max=100 #cols> Столбцы (3-100)<br>
+      <button type="submit">Перестроить поле</button>
     </form>
   </div>
 </div>
