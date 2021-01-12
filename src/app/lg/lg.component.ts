@@ -9,7 +9,6 @@ export class LgComponent implements OnInit {
 
   tableRows:number;
   tableCols:number;
-  status: boolean = true;
   cells: any;
   rows: number;
 
@@ -26,8 +25,9 @@ export class LgComponent implements OnInit {
     let cells = [];
     for (let i = 1; i <= rows; i++) {
       let row = [];
-      for (let y = 1; y <= cols; y++) {
-        row.push(false);
+      for (let j = 1; j <= cols; j++) {
+        let newCell = {row: i, col: j, isAlive: false};
+        row.push(newCell);
       }
       cells.push(row);
     }
@@ -44,8 +44,9 @@ export class LgComponent implements OnInit {
     return false;
   }
 
-  changeStatus() {
-    this.status = !this.status;
+  changeCellStatus (row: number, col: number, isAlive: boolean) {
+    let selectedCell = this.cells[row-1][col-1];
+    selectedCell.isAlive = !selectedCell.isAlive;
   }
 
 }

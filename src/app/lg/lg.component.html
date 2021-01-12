@@ -2,7 +2,7 @@
   <h2>Life Game works!</h2>
   <table class="gmbrd">
     <tr *ngFor = "let row of cells; index as i">
-      <td *ngFor = "let cell of cells[i]" [ngClass]="cell ? 'success': 'alive'">&nbsp;</td>
+      <td *ngFor = "let cell of cells[i]" [class.alive]="cell.isAlive" (click)="changeCellStatus(cell.row, cell.col, cell.isAlive)">&nbsp;</td>
     </tr>
   </table>
   <br>
