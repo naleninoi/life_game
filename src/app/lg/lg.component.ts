@@ -18,6 +18,7 @@ export class LgComponent implements OnInit {
     this.tableRows = 12;
     this.tableCols = 12;
     this.cells = this.createBoard(this.tableRows, this.tableCols);
+    this.cells = this.createBoard(this.tableRows, this.tableCols);
   }
 
   createBoard(rows:number, cols:number) {
@@ -38,11 +39,6 @@ export class LgComponent implements OnInit {
     this.tableCols = cols;
     this.cells = this.createBoard(this.tableRows, this.tableCols);
     return false;
-  }
-
-  changeCellStatus (row: number, col: number, isAlive: boolean) {
-    let selectedCell = this.cells[row-1][col-1];
-    selectedCell.isAlive = !selectedCell.isAlive;
   }
 
 }

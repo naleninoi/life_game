@@ -1,0 +1,20 @@
+table.gmbrd {
+  text-align: center;
+  border: 2px solid;
+  border-collapse: collapse;
+  padding: 1px;
+  empty-cells: show;
+}
+
+tr {
+  height: 25px;
+}
+
+td {
+  border: 1px solid;
+  width: 25px;
+}
+
+td.alive {
+  background-color: green;
+}
