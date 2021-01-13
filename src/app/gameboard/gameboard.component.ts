@@ -8,6 +8,7 @@ import { Component, OnInit, Input, Output } from '@angular/core';
 export class GameboardComponent implements OnInit {
 
   @Input() cells;
+  @Input() generation;
 
   constructor() { }
 

@@ -7,15 +7,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LgComponent implements OnInit {
 
-  tableRows: number;
-  tableCols: number;
+  tableRows: number = 15;
+  tableCols: number = 15;
   cells: any;
+  generation: number = 1;
+  isRules: boolean = false;
 
   constructor() { }
 
   ngOnInit(): void {
-    this.tableRows = 12;
-    this.tableCols = 12;
+    // this.tableRows = 15;
+    // this.tableCols = 15;
     this.cells = this.createBoard(this.tableRows, this.tableCols);
    }
 
@@ -37,6 +39,24 @@ export class LgComponent implements OnInit {
     this.tableCols = Number(cols);
     this.cells = this.createBoard(this.tableRows, this.tableCols);
     return false;
+  }
+
+  showRules() {
+    this.isRules = !this.isRules;
+  }
+
+  makeNextGen() {
+    let currentGen = this.cells;
+    // перебор всех клеток в игровом поле
+    for (let i = 0; i <= this.tableRows - 1; i++) {
+      for (let y = 0; y <= this.tableCols - 1; y++) {
+        let currentCell = currentGen[i][y];
+        // выбор соседних клеток для заданной клетки
+        let currentCellNbrs = [currentGen[i-1][y-1], currentGen[i-1][y], currentGen[i-1][y+1], currentGen[i][y-1], currentGen[i][y+1], currentGen[i+1][y-1], currentGen[i+1][y], currentGen[i+1][y+1]];
+        console.log(currentCellNbrs);
+
+      }
+    }
   }
 
 }

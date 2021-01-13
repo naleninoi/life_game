@@ -1,13 +1,27 @@
 <div class="container">
+
   <h2>Life Game works!</h2>
-  <app-gameboard [cells]="cells"></app-gameboard>
+  <app-gameboard [cells]="cells" [generation]="generation"></app-gameboard>
   <br>
-  <div class="alert alert-warning">
+  <button class="btn btn-info" (click)="makeNextGen()">Вперед</button>
+  <div class="form-group">
     <form (submit)="setBoard(rows.value, cols.value)">
       <label>Задайте размер игрового поля</label><br>
       <input type="number" id="table_rows" placeholder="10" value="{{tableRows}}" min=3 max=100 #rows> Строки (3-100)<br>
       <input type="number" id="table_cols" placeholder="10" value="{{tableCols}}" min=3 max=100 #cols> Столбцы (3-100)<br>
-      <button type="submit">Перестроить поле</button>
+      <button class="btn btn-success" type="submit">Перестроить поле</button>
     </form>
   </div>
+  <button class="btn btn-info" (click)="showRules()">
+    <label *ngIf="!isRules; else elseBlock">Показать правила</label>
+    <ng-template #elseBlock>Скрыть правила</ng-template>
+  </button>
+  <div class="rules" *ngIf=isRules>
+    <p class="">Место действия этой игры — «вселенная» — это размеченная на клетки поверхность или плоскость — безграничная, ограниченная, или замкнутая (в пределе — бесконечная плоскость).</p>
+    <p>Каждая клетка на этой поверхности может находиться в двух состояниях: быть «живой» (заполненной) или быть «мёртвой» (пустой). Клетка имеет восемь соседей, окружающих её.</p>
+    <p>Распределение живых клеток в начале игры называется первым поколением. Каждое следующее поколение рассчитывается на основе предыдущего по таким правилам:</p>
+    <p>в пустой (мёртвой) клетке, рядом с которой ровно три живые клетки, зарождается жизнь;</p>
+    <p>если у живой клетки есть две или три живые соседки, то эта клетка продолжает жить; в противном случае, если соседей меньше двух или больше трёх, клетка умирает («от одиночества» или «от перенаселённости»).</p>
+  </div>
+  <app-footer></app-footer>
 </div>
