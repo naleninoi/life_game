@@ -7,10 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LgComponent implements OnInit {
 
-  tableRows:number;
-  tableCols:number;
+  tableRows: number;
+  tableCols: number;
   cells: any;
-  rows: number;
 
   constructor() { }
 
@@ -18,8 +17,7 @@ export class LgComponent implements OnInit {
     this.tableRows = 12;
     this.tableCols = 12;
     this.cells = this.createBoard(this.tableRows, this.tableCols);
-    this.cells = this.createBoard(this.tableRows, this.tableCols);
-  }
+   }
 
   createBoard(rows:number, cols:number) {
     let cells = [];
@@ -35,8 +33,8 @@ export class LgComponent implements OnInit {
   }
 
   setBoard(rows: any, cols: any) {
-    this.tableRows = rows;
-    this.tableCols = cols;
+    this.tableRows = Number(rows);
+    this.tableCols = Number(cols);
     this.cells = this.createBoard(this.tableRows, this.tableCols);
     return false;
   }
