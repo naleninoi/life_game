@@ -3,7 +3,7 @@
   <h2>Life Game works!</h2>
   <app-gameboard [cells]="cells" [generation]="generation"></app-gameboard>
   <br>
-  <button class="btn btn-info" (click)="makeNextMove()">Вперед</button>
+  <button class="btn btn-warning" (click)="makeNextMove()">Вперед на 1 ход</button>
   <div class="form-group">
     <form (submit)="setBoard(rows.value, cols.value)">
       <label>Задайте размер игрового поля</label><br>

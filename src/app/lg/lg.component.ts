@@ -7,16 +7,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LgComponent implements OnInit {
 
-  tableRows: number = 5;
-  tableCols: number = 5;
+  tableRows: number = 20;
+  tableCols: number = 20;
   cells: any;
-  generation: number = 1;
+  generation: number;
   isRules: boolean = false;
 
   constructor() { }
 
   ngOnInit(): void {
     this.cells = this.createBoard(this.tableRows, this.tableCols);
+    this.generation = 1;
    }
 
   createBoard(rows:number, cols:number) {
@@ -41,6 +42,7 @@ export class LgComponent implements OnInit {
     this.tableRows = Number(rows);
     this.tableCols = Number(cols);
     this.cells = this.createBoard(this.tableRows, this.tableCols);
+    this.generation = 1;
     return false;
   }
 
@@ -112,7 +114,7 @@ export class LgComponent implements OnInit {
     return currentCellNbrs;
   }
 
-  countAliveCells(cellsGroup: any) {
+  countAliveCells(cellsGroup: any) { // подсчитывает кол-во живых клеток в заданной группе клеток
     let aliveCells = 0;
     for (let i = 0; i < cellsGroup.length; i++) {
       let cell = cellsGroup[i];
@@ -123,18 +125,57 @@ export class LgComponent implements OnInit {
     return aliveCells
   }
 
-  makeNextMove() {
-    // перебор всех клеток в игровом поле
-    const lastRow = this.tableRows - 1;
-    const lastCol = this.tableCols - 1;
-    let newCells = this.cells;
-    for (let i = 0; i <= lastRow; i++) {
-      for (let j = 0; j <= lastCol; j++) {
-        let currentCell = newCells[i][j];
-        let nbrCells = this.seekNbrCells(currentCell);
-        let aliveNbrs = this.countAliveCells(nbrCells);
+  checkCellChange(cell, aliveNbrs) { // проверяет, изменится ли статус клетки в следующем ходе
+    let cellChange = false;
+    if (cell.isAlive) {
+      if (aliveNbrs >= 2 && aliveNbrs <= 3) {
+        cellChange = false;
+      }
+      else {
+        cellChange = true;
       }
     }
+    else {
+      if(aliveNbrs != 3) {
+        cellChange = false;
+      }
+      else {
+        cellChange = true;
+      }
+    }
+    return cellChange
+  }
+
+    makeNextGeneration(changedCells) { // изменяет статус клеток, к-рые выбраны для изменения в следующем ходе
+    const lastRow = this.tableRows - 1;
+    const lastCol = this.tableCols - 1;
+    for (let i = 0; i <= lastRow; i++) {
+      for (let j = 0; j <= lastCol; j++) {
+        let currentCell = this.cells[i][j];
+        if (changedCells.includes(currentCell.id)) {
+          currentCell.isAlive = !currentCell.isAlive;
+          }
+      }
+    }
+  }
+
+  makeNextMove() { // для каждой клетки на поле:
+    const lastRow = this.tableRows - 1;
+    const lastCol = this.tableCols - 1;
+    let changedCells = [];
+    for (let i = 0; i <= lastRow; i++) {
+      for (let j = 0; j <= lastCol; j++) {
+        let currentCell = this.cells[i][j];
+        let nbrCells = this.seekNbrCells(currentCell); // поиск всех соседних клеток
+        let aliveNbrs = this.countAliveCells(nbrCells); // подсчет живых клеток среди соседних
+        let changeStatus = this.checkCellChange(currentCell, aliveNbrs); // отбор клеток для изменения в следующем ходе
+        if (changeStatus) {
+          changedCells.push(currentCell.id);
+          }
+      }
+    }
+    this.makeNextGeneration(changedCells); // изменение выбранных клеток
+    this.generation++; // увеличение счетчика ходов
   }
 
 }
