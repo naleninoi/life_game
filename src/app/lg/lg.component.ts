@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Cell, NbrCell } from '../model';
 
 @Component({
   selector: 'app-lg',
@@ -27,7 +28,8 @@ export class LgComponent implements OnInit {
     for (let i = 0; i < rows; i++) {
       let row = [];
       for (let j = 0; j < cols; j++) {
-        let newCell = {id: counter, row: i, col: j, isAlive: false};
+        let newCell = new Cell(counter, i, j, false, []);
+        newCell.nbrs = this.seekNbrCells(newCell);
         row.push(newCell);
         counter++;
       }
@@ -50,74 +52,74 @@ export class LgComponent implements OnInit {
     this.isRules = !this.isRules;
   }
 
-  seekNbrCells(currentCell) { // поиск всех соседних клеток для заданной клетки
+    seekNbrCells(currentCell: Cell) { // поиск всех соседних клеток для заданной клетки
     const lastRow = this.tableRows - 1;
     const lastCol = this.tableCols - 1;
     const i = currentCell.row;
     const j = currentCell.col;
-    const cells = this.cells;
     let currentCellNbrs = [];
 
     if (i == 0) { // если клетка в первой строке
       if (j == 0) { // если клетка в первой колонке
-        currentCellNbrs = [cells[lastRow][lastCol], cells[lastRow][j], cells[lastRow][j+1], 
-        cells[i][lastCol], cells[i][j+1], 
-        cells[i+1][lastCol], cells[i+1][j], cells[i+1][j+1]];
+        currentCellNbrs = [new NbrCell(lastRow, lastCol), new NbrCell(lastRow, j), new NbrCell(lastRow, j+1), 
+        new NbrCell(i, lastCol), new NbrCell(i, j+1), 
+        new NbrCell(i+1, lastCol), new NbrCell(i+1, j), new NbrCell(i+1, j+1)];
       }
       else if (j == lastCol) { // если клетка в последней колонке
-        currentCellNbrs = [cells[lastRow][j-1], cells[lastRow][j], cells[lastRow][0], 
-        cells[i][j-1], cells[i][0], 
-        cells[i+1][j-1], cells[i+1][j], cells[i+1][0]];
+        currentCellNbrs = [new NbrCell(lastRow, j-1), new NbrCell(lastRow, j), new NbrCell(lastRow, 0), 
+        new NbrCell(i, j-1), new NbrCell(i, 0), 
+        new NbrCell(i, j-1), new NbrCell(i+1, j), new NbrCell(i+1, 0)];
       }
       else { // если клетка в колонке от 2-й до предпоследней
-        currentCellNbrs = [cells[lastRow][j-1], cells[lastRow][j], cells[lastRow][j+1], 
-        cells[i][j-1], cells[i][j+1], 
-        cells[i+1][j-1], cells[i+1][j], cells[i+1][j+1]];
+        currentCellNbrs = [new NbrCell(lastRow, j-1), new NbrCell(lastRow, j), new NbrCell(lastRow, j+1), 
+        new NbrCell(i, j-1), new NbrCell(i, j+1), 
+        new NbrCell(i+1, j-1), new NbrCell(i+1, j), new NbrCell(i+1, j+1)];
       }
     }
     
     else if (i == lastRow) { // если клетка в последней строке
       if (j == 0) { // если клетка в первой колонке
-        currentCellNbrs = [cells[i-1][lastCol], cells[i-1][j], cells[i-1][j+1], 
-        cells[i][lastCol], cells[i][j+1], 
-        cells[0][lastCol], cells[0][j], cells[0][j+1]];
+        currentCellNbrs = [new NbrCell(i-1, lastCol), new NbrCell(i-1, j), new NbrCell(i-1, j+1), 
+        new NbrCell(i, lastCol), new NbrCell(i, j+1), 
+        new NbrCell(0, lastCol), new NbrCell(0, j), new NbrCell(0, j+1)];
       }
       else if (j == lastCol) { // если клетка в последней колонке
-        currentCellNbrs = [cells[i-1][j-1], cells[i-1][j], cells[i-1][0], 
-        cells[i][j-1], cells[i][0], 
-        cells[0][j-1], cells[0][j], cells[0][0]];
+        currentCellNbrs = [new NbrCell(i-1, j-1), new NbrCell(i-1, j), new NbrCell(i-1, 0), 
+        new NbrCell(i, j-1), new NbrCell(i, 0), 
+        new NbrCell(0, j-1), new NbrCell(0, j), new NbrCell(0, 0)];
       }
       else { // если клетка в колонке от 2-й до предпоследней
-        currentCellNbrs = [cells[i-1][j-1], cells[i-1][j], cells[i-1][j+1], 
-        cells[i][j-1], cells[i][j+1], 
-        cells[0][j-1], cells[0][j], cells[0][j+1]];
+        currentCellNbrs = [new NbrCell(i-1, j-1), new NbrCell(i-1, j), new NbrCell(i-1, j+1), 
+        new NbrCell(i, j-1), new NbrCell(i, j+1), 
+        new NbrCell(0, j-1), new NbrCell(0, j), new NbrCell(0, j+1)];
       }
     }
 
     else { // если клетка в строке от 2-й до предпоследней
       if (j == 0) { // если клетка в первой колонке
-        currentCellNbrs = [cells[i-1][lastCol], cells[i-1][j], cells[i-1][j+1], 
-        cells[i][lastCol], cells[i][j+1], 
-        cells[i+1][lastCol], cells[i+1][j], cells[i+1][j+1]];
+        currentCellNbrs = [new NbrCell(i-1, lastCol), new NbrCell(i-1, j), new NbrCell(i-1, j+1), 
+        new NbrCell(i, lastCol), new NbrCell(i, j+1), 
+        new NbrCell(i+1, lastCol), new NbrCell(i+1, j), new NbrCell(i+1, j+1)];
       }
       else if (j == lastCol) { // если клетка в последней колонке
-        currentCellNbrs = [cells[i-1][j-1], cells[i-1][j], cells[i-1][0], 
-        cells[i][j-1], cells[i][0], 
-        cells[i+1][j-1], cells[i+1][j], cells[i+1][0]];
+        currentCellNbrs = [new NbrCell(i-1, j-1), new NbrCell(i-1, j), new NbrCell(i-1, 0), 
+        new NbrCell(i, j-1), new NbrCell(i, 0), 
+        new NbrCell(i+1, j-1), new NbrCell(i+1, j), new NbrCell(i+1, 0)];
       }
       else { // если клетка в колонке от 2-й до предпоследней
-        currentCellNbrs = [cells[i-1][j-1], cells[i-1][j], cells[i-1][j+1], 
-        cells[i][j-1], cells[i][j+1], 
-        cells[i+1][j-1], cells[i+1][j], cells[i+1][j+1]];
+        currentCellNbrs = [new NbrCell(i-1, j-1), new NbrCell(i-1, j), new NbrCell(i-1, j+1), 
+        new NbrCell(i, j-1), new NbrCell(i, j+1), 
+        new NbrCell(i+1, j-1), new NbrCell(i+1, j), new NbrCell(i+1, j+1)];
       }
     }      
     return currentCellNbrs;
   }
 
-  countAliveCells(cellsGroup: any) { // подсчитывает кол-во живых клеток в заданной группе клеток
+  countAliveCells(currentCell: Cell) { // подсчитывает кол-во живых клеток среди соседей заданной клетки
     let aliveCells = 0;
-    for (let i = 0; i < cellsGroup.length; i++) {
-      let cell = cellsGroup[i];
+    for (let i = 0; i < currentCell.nbrs.length; i++) {
+      let nbr = currentCell.nbrs[i];
+      let cell = this.cells[nbr.row][nbr.col];
       if (cell.isAlive) {
         aliveCells++;
       }
@@ -166,8 +168,7 @@ export class LgComponent implements OnInit {
     for (let i = 0; i <= lastRow; i++) {
       for (let j = 0; j <= lastCol; j++) {
         let currentCell = this.cells[i][j];
-        let nbrCells = this.seekNbrCells(currentCell); // поиск всех соседних клеток
-        let aliveNbrs = this.countAliveCells(nbrCells); // подсчет живых клеток среди соседних
+        let aliveNbrs = this.countAliveCells(currentCell); // подсчет живых клеток среди соседних
         let changeStatus = this.checkCellChange(currentCell, aliveNbrs); // отбор клеток для изменения в следующем ходе
         if (changeStatus) {
           changedCells.push(currentCell.id);
